@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Paper, TextField, Button, Typography, Box, Rating, Card, CardContent } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import config from '../config';
 
 const Reviews = () => {
   const navigate = useNavigate();
@@ -12,24 +13,13 @@ const Reviews = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.log('Environment check:', {
-      apiUrl: process.env.REACT_APP_API_URL,
-      isDefined: process.env.REACT_APP_API_URL !== undefined,
-      isNull: process.env.REACT_APP_API_URL === null
-    });
     fetchReviews();
   }, []);
 
   const fetchReviews = async () => {
     try {
-      const apiUrl = process.env.REACT_APP_API_URL;
-      if (!apiUrl) {
-        console.error('API URL is not configured');
-        return;
-      }
-
-      console.log('Fetching reviews from:', `${apiUrl}/api/reviews`);
-      const response = await axios.get(`${apiUrl}/api/reviews`, {
+      console.log('Fetching reviews from:', `${config.apiUrl}/api/reviews`);
+      const response = await axios.get(`${config.apiUrl}/api/reviews`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json'
@@ -85,17 +75,12 @@ const Reviews = () => {
     setIsLoading(true);
 
     try {
-      const apiUrl = process.env.REACT_APP_API_URL;
-      if (!apiUrl) {
-        throw new Error('API URL is not configured');
-      }
-
       const token = localStorage.getItem('token');
       if (!token) {
         throw new Error('Please login to submit a review');
       }
 
-      const response = await axios.post(`${apiUrl}/api/reviews`, newReview, {
+      const response = await axios.post(`${config.apiUrl}/api/reviews`, newReview, {
         headers: { 
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -117,11 +102,17 @@ const Reviews = () => {
   return (
     <Box
       sx={{
-        backgroundImage: "url('https://wallpapers.com/images/hd/women-background-n9t5k0r03kw0qze3.jpg')",
+        backgroundImage: {
+          xs: "url('https://img.freepik.com/free-vector/organic-flat-feedback-concept-illustrated_23-2148951368.jpg?ga=GA1.1.1199500948.1737623741&semt=ais_hybrid')",  // Mobile view
+          sm: "url('https://wallpapers.com/images/hd/women-background-n9t5k0r03kw0qze3.jpg')"  // Tablet & Desktop
+        },
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        backgroundAttachment: "fixed",
+        backgroundAttachment: {
+          xs: "scroll", // Mobile-friendly
+          sm: "fixed"   // Desktop & Tablets
+        },
         minHeight: "100vh",
         display: "flex",
         alignItems: "center",

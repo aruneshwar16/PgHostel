@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Container, Paper, TextField, Button, Typography, Box,Link } from '@mui/material';
+import { Container, Paper, TextField, Button, Typography, Box, Link } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import config from '../config';
 
 const backgroundImage = "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZmeHrBOns9nS3HmGr2bJsRvU3y5U2uo_OughaKC3Sysl0D5ZKmwEZ5zTUJVM-SP3S-SQ&usqp=CAU')";
 
@@ -54,13 +55,6 @@ const Register = () => {
   
     if (validateForm()) {
       try {
-        // Check if server is reachable
-        try {
-          await axios.get(`${process.env.REACT_APP_API_URL}/test`);
-        } catch (error) {
-          throw new Error('Cannot connect to server. Please make sure the backend server is running.');
-        }
-  
         console.log('Attempting to register with:', {
           name: formData.name,
           email: formData.email,
@@ -68,7 +62,7 @@ const Register = () => {
           password: formData.password
         });
   
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
+        const response = await axios.post(`${config.apiUrl}/api/auth/register`, {
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
@@ -77,8 +71,9 @@ const Register = () => {
   
         console.log('Registration successful:', response.data);
   
-        // Store the token
+        // Store the token and user data
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
   
         // ✅ Show success message in GREEN before redirecting
         setSubmitError('✅ Registration successful! Redirecting to login...');

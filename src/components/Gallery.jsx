@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Box, TextField, Button, Container, Typography, Grid, MenuItem, Alert } from '@mui/material';
 import { AccountCircle, Lock, Image, Logout } from '@mui/icons-material';
 import InputAdornment from '@mui/material/InputAdornment';
+import config from '../config';
 
 const Gallery = () => {
   const [username, setUsername] = useState('');
@@ -17,14 +18,8 @@ const Gallery = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const apiUrl = process.env.REACT_APP_API_URL;
-        if (!apiUrl) {
-          console.error('API URL is not configured');
-          return;
-        }
-
-        console.log('Fetching gallery from:', `${apiUrl}/api/gallery`);
-        const response = await axios.get(`${apiUrl}/api/gallery`, {
+        console.log('Fetching gallery from:', `${config.apiUrl}/api/gallery`);
+        const response = await axios.get(`${config.apiUrl}/api/gallery`, {
           headers: {
             'Content-Type': 'application/json'
           }
@@ -96,12 +91,6 @@ const Gallery = () => {
     event.preventDefault();
     if (!file) return alert('Please select an image.');
 
-    const apiUrl = process.env.REACT_APP_API_URL;
-    if (!apiUrl) {
-      alert('API URL is not configured');
-      return;
-    }
-
     const formData = new FormData();
     formData.append('image', file);
     formData.append('title', category);
@@ -115,7 +104,7 @@ const Gallery = () => {
       }
 
       const response = await axios.post(
-        `${apiUrl}/api/gallery`,
+        `${config.apiUrl}/api/gallery`,
         formData,
         {
           headers: {
@@ -126,7 +115,7 @@ const Gallery = () => {
       );
 
       // Refresh the images list
-      const updatedImages = await axios.get(`${apiUrl}/api/gallery`);
+      const updatedImages = await axios.get(`${config.apiUrl}/api/gallery`);
       setImages(updatedImages.data);
       
       // Clear the form
