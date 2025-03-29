@@ -55,18 +55,26 @@ const Register = () => {
   
     if (validateForm()) {
       try {
+        const apiUrl = `${config.apiUrl}/api/auth/register`;
         console.log('Attempting to register with:', {
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          password: formData.password
+          url: apiUrl,
+          data: {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            password: formData.password
+          }
         });
   
-        const response = await axios.post(`${config.apiUrl}/api/auth/register`, {
+        const response = await axios.post(apiUrl, {
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
           password: formData.password
+        }, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
         });
   
         console.log('Registration successful:', response.data);
@@ -85,7 +93,11 @@ const Register = () => {
   
       } catch (error) {
         console.error('Registration error:', error);
-        if (error.response) {
+        console.error('Error response:', error.response?.data);
+        
+        if (error.response?.status === 405) {
+          setSubmitError('❌ Registration endpoint is not available. Please try again later.');
+        } else if (error.response) {
           setSubmitError(error.response.data.message || '❌ Registration failed. Please try again.');
         } else if (error.request) {
           setSubmitError('❌ Cannot connect to server. Please try again later.');

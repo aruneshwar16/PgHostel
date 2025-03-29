@@ -12,13 +12,13 @@ const FoodMenu = () => {
   const menuRef = useRef(null);
 
   const days = [
-    { name: 'Monday', menu: { breakfast: 'Idli, Sambar, Chutney', lunch: 'Rice, Sambar, Rasam, Curd', dinner: 'Dosa, Sambar, Chutney' }, icon: 'https://cdn-icons-png.freepik.com/256/8587/8587067.png' },
-    { name: 'Tuesday', menu: { breakfast: 'Vada, Sambar, Chutney', lunch: 'Rice, Sambar, Rasam, Curd', dinner: 'Idli, Sambar, Chutney' }, icon: 'https://cdn-icons-png.freepik.com/256/8587/8587076.png?ga=GA1.1.1199500948.1737623741' },
-    { name: 'Wednesday', menu: { breakfast: 'Poori, Sambar', lunch: 'Rice, Sambar, Rasam, Curd', dinner: 'Dosa, Sambar, Chutney' }, icon: 'https://cdn-icons-png.freepik.com/256/8587/8587085.png?ga=GA1.1.1199500948.1737623741&semt=ais_hybrid' },
-    { name: 'Thursday', menu: { breakfast: 'Upma, Sambar', lunch: 'Rice, Sambar, Rasam, Curd', dinner: 'Idli, Sambar, Chutney' }, icon: 'https://cdn-icons-png.freepik.com/256/8587/8587091.png?ga=GA1.1.1199500948.1737623741' },
-    { name: 'Friday', menu: { breakfast: 'Pongal, Sambar', lunch: 'Rice, Sambar, Rasam, Curd', dinner: 'Dosa, Sambar, Chutney' }, icon: 'https://cdn-icons-png.freepik.com/256/8587/8587098.png?ga=GA1.1.1199500948.1737623741' },
-    { name: 'Saturday', menu: { breakfast: 'Idli, Sambar, Chutney', lunch: 'Rice, Sambar, Rasam, Curd', dinner: 'Vada, Sambar, Chutney' }, icon: 'https://cdn-icons-png.freepik.com/256/8587/8587106.png?ga=GA1.1.1199500948.1737623741' },
-    { name: 'Sunday', menu: { breakfast: 'Poori, Sambar', lunch: 'Rice, Sambar, Rasam, Curd', dinner: 'Upma, Sambar' }, icon: 'https://cdn-icons-png.freepik.com/256/8587/8587114.png?ga=GA1.1.1199500948.1737623741' },
+    { name: 'Monday', menu: { breakfast: 'Idli & Sambar', lunch: 'Rice,keerai Masiyal,Poriyal, Curd', dinner: 'Veg-Noodles & red Sauce' }, icon: 'https://cdn-icons-png.freepik.com/256/8587/8587067.png' },
+    { name: 'Tuesday', menu: { breakfast: 'Millet Dosai,Chutney', lunch: 'Rice, Sambar, Rasam,Poriyal', dinner: 'Tomato Rice & Chips' }, icon: 'https://cdn-icons-png.freepik.com/256/8587/8587076.png?ga=GA1.1.1199500948.1737623741' },
+    { name: 'Wednesday', menu: { breakfast: 'Idli, Sambar/chutney', lunch: 'Veg Briyani & Raitha', dinner: 'Dosa & Chutney' }, icon: 'https://cdn-icons-png.freepik.com/256/8587/8587085.png?ga=GA1.1.1199500948.1737623741&semt=ais_hybrid' },
+    { name: 'Thursday', menu: { breakfast: 'Idiyappam & Kuruma', lunch:'LemonRice & Potatocurry', dinner: 'Chappathi & Dhal' }, icon: 'https://cdn-icons-png.freepik.com/256/8587/8587091.png?ga=GA1.1.1199500948.1737623741' },
+    { name: 'Friday', menu: { breakfast: 'Pongal-Sambar', lunch: 'Rice,Sambar,Rasam & Poriyal', dinner: 'Idli & Chutney' }, icon: 'https://cdn-icons-png.freepik.com/256/8587/8587098.png?ga=GA1.1.1199500948.1737623741' },
+    { name: 'Saturday', menu: { breakfast: 'Idli,Kuruma', lunch: 'Kara-Kolompu,Kootu,Curd', dinner: 'SambarRice & Applam' }, icon: 'https://cdn-icons-png.freepik.com/256/8587/8587106.png?ga=GA1.1.1199500948.1737623741' },
+    { name: 'Sunday', menu: { breakfast: 'Poori & Masala', lunch: 'Rice,Sambar,Rasam,poriyal,Curd', dinner: 'Dosai Chutney/Sambar' }, icon: 'https://cdn-icons-png.freepik.com/256/8587/8587114.png?ga=GA1.1.1199500948.1737623741' },
   ];
 
   const scrollToMenu = () => {

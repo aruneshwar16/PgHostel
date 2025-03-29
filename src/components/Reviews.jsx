@@ -80,6 +80,7 @@ const Reviews = () => {
         throw new Error('Please login to submit a review');
       }
 
+      console.log('Submitting review to:', `${config.apiUrl}/api/reviews`);
       const response = await axios.post(`${config.apiUrl}/api/reviews`, newReview, {
         headers: { 
           Authorization: `Bearer ${token}`,
@@ -87,12 +88,14 @@ const Reviews = () => {
         }
       });
 
+      console.log('Review submission response:', response.data);
       setReviews(prev => [...prev, response.data]);
       setSuccessMessage('✅ Thank you for your review!');
       setTimeout(() => setSuccessMessage(''), 4000);
       setNewReview({ rating: 0, comment: '' });
     } catch (error) {
       console.error('Error submitting review:', error);
+      console.error('Error response:', error.response?.data);
       setError(error.response?.data?.message || error.message || 'Error submitting review');
     } finally {
       setIsLoading(false);
