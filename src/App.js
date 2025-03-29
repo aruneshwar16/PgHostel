@@ -8,6 +8,8 @@ import Reviews from './components/Reviews';
 import Contact from './components/Contact';
 import Register from './components/Register';
 import Login from './components/Login';
+import Gallery from './components/Gallery';
+import FoodMenu from './components/foodmenu'; 
 
 const theme = createTheme({
   palette: {
@@ -33,6 +35,8 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/foodmenu" element={<FoodMenu />} /> {/* ✅ Added this route */}
           </Routes>
         </div>
       </Router>

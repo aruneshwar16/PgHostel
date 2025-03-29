@@ -52,7 +52,7 @@ const Login = () => {
     <Box
   sx={{
     backgroundImage: {
-      xs: "url('https://img.freepik.com/premium-photo/unity-strength-women-silhouettes-purplepink-wash_818261-31543.jpg?semt=ais_hybrid')",  // Mobile view
+      xs: "url('https://img.freepik.com/free-vector/women-s-day-pattern-with-women-faces_23-2148403753.jpg')",  // Mobile view (empty or add a mobile URL)
       sm: "url('https://t3.ftcdn.net/jpg/06/46/82/48/360_F_646824853_Ofj7OmU84JIIhqilkumCbz2AdZpudRMY.jpg')"  // Desktop view
     },
     backgroundSize: "cover",
@@ -75,15 +75,16 @@ const Login = () => {
       boxShadow: "0px 4px 10px rgba(0,0,0,0.1)", // Soft shadow
     }}
   >
-    <Typography variant="h4" component="h1" align="center" gutterBottom>
-      Login
-    </Typography>
-    
-    {error && (
-      <Typography color="error" align="center" sx={{ mb: 2 }}>
-        {error}
+    <Box display="flex" flexDirection="column" alignItems="center" gap={1}>
+      <video autoPlay loop muted playsInline style={{ width: "60px", height: "60px", borderRadius: "70%" }}>
+        <source src="  https://cdn-icons-mp4.flaticon.com/512/15911/15911098.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Login
       </Typography>
-    )}
+
+</Box>
 
           <Box component="form" onSubmit={handleSubmit}>
             <TextField

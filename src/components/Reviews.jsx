@@ -135,9 +135,15 @@ const Reviews = () => {
           }}
         >
           <Typography variant="h4" component="h1" align="center" gutterBottom>
-            Review Us!
-          </Typography>
-
+  <img
+    src="https://cdn-icons-png.freepik.com/256/2065/2065224.png"
+    alt="Review Icon"
+    width="40"
+    height="40"
+    style={{ verticalAlign: "middle", marginRight: "10px" }}
+  />
+  Review Us!
+</Typography>
           {successMessage && (
             <Typography color="success" align="center" sx={{ mb: 2 }}>
               {successMessage}
@@ -180,6 +186,7 @@ const Reviews = () => {
               required
               disabled={isLoading}
             />
+            
             <Button
               type="submit"
               fullWidth
@@ -227,3 +234,5 @@ const Reviews = () => {
 };
 
 export default Reviews;
+
+

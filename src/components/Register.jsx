@@ -108,7 +108,7 @@ const Register = () => {
     <Box
       sx={{
         backgroundImage: {
-          xs: "url('https://img.freepik.com/free-vector/women-s-day-pattern-with-women-faces_23-2148403753.jpg')",  // Mobile view (empty or add a mobile URL)
+          xs: "url('https://img.freepik.com/premium-photo/unity-strength-women-silhouettes-purplepink-wash_818261-31543.jpg?semt=ais_hybrid')",  // Mobile view (empty or add a mobile URL)
           sm: "url('https://media.licdn.com/dms/image/v2/D5612AQEU1rJZDBlwfg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1692244308608?e=2147483647&v=beta&t=PRg4fKEYMOwXmrCNrvyOv5ziOYKVzcskUR-emz9EfLY')"
         },
         backgroundSize: "cover",
@@ -121,27 +121,30 @@ const Register = () => {
       }}
     >
 
-<Container maxWidth="sm">
+<Container maxWidth="xs">
   <Paper
     elevation={3}
     sx={{
-      p: 4,
-      mt: 4,
-      backgroundColor: "rgba(255, 255, 255, 0.7)", // Semi-transparent white
-      backdropFilter: "blur(5px)", // Blur effect for readability
-      borderRadius: "10px", // Smooth rounded corners
-      boxShadow: "0px 4px 10px rgba(0,0,0,0.1)", // Soft shadow
+      p: 3, // Reduced padding
+      mt: 3, // Reduced margin
+      backgroundColor: "rgba(255, 255, 255, 0.7)", 
+      backdropFilter: "blur(5px)", 
+      borderRadius: "10px", 
+      boxShadow: "0px 4px 10px rgba(0,0,0,0.1)", 
+      width: "100%", // Reduced width
+      maxWidth: "350px" // Limits max width
     }}
-  >
-    <Typography variant="h4" component="h1" align="center" gutterBottom>
-      Register
-    </Typography>
-    
-    {submitError && (
-      <Typography color="error" align="center" sx={{ mb: 2 }}>
-        {submitError}
-      </Typography>
-    )}
+  ><Box display="flex" flexDirection="column" alignItems="center" gap={1}>
+  <video autoPlay loop muted playsInline style={{ width: "50px", height: "50px", borderRadius: "50%" }}>
+    <source src="https://cdn-icons-mp4.freepik.com/128/18986/18986443.mp4?ga=GA1.1.1199500948.1737623741&semt=ais_hybrid" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+  <Typography variant="h4" component="h1" gutterBottom>
+    Register
+  </Typography>
+</Box>
+
+
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
             <TextField
               fullWidth

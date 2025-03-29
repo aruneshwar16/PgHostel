@@ -17,7 +17,8 @@ const Navbar = () => {
     { text: "Reviews", path: "/reviews" },
     { text: "About", path: "/contact" },
     { text: "Register", path: "/register" },
-    { text: "Login", path: "/login" }
+    { text: "Login", path: "/login" },
+    { text: "Gallery", path: "/gallery" } // ✅ Changed "/Gallery" to "/gallery"
   ];
 
   return (
@@ -56,15 +57,28 @@ const Navbar = () => {
       </AppBar>
 
       {/* Mobile Drawer */}
-      <Drawer anchor="right" open={mobileOpen} onClose={handleDrawerToggle}>
-        <List sx={{ width: 200 }}>
+      <Drawer
+        anchor="right"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        sx={{
+          "& .MuiDrawer-paper": {
+            width: 200,
+            backgroundImage: "url('/pg5.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          },
+        }}
+      >
+        <List sx={{ width: "100%", color: "brown" }}> {/* ✅ Fixed text color */}
           {menuItems.map((item) => (
-            <ListItem 
-              key={item.text} 
-              component={Link} 
-              to={item.path} 
+            <ListItem
+              key={item.text}
+              component={Link}
+              to={item.path}
               onClick={handleDrawerToggle}
-              sx={{ textDecoration: 'none', color: 'inherit' }}
+              sx={{ textDecoration: "none", color: "inherit" }}
             >
               <ListItemText primary={item.text} />
             </ListItem>
