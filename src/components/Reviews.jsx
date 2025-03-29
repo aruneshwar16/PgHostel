@@ -21,7 +21,7 @@ const Reviews = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.get('http://localhost:5002/api/reviews', {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/reviews`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -70,7 +70,7 @@ const Reviews = () => {
         throw new Error('Please login to submit a review');
       }
 
-      const response = await axios.post('http://localhost:5002/api/reviews', newReview, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/reviews`, newReview, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -217,7 +217,7 @@ const Reviews = () => {
                     variant="body1"
                     sx={{ fontWeight: 'bold', color: 'black', ml: 1 }}
                   >
-                    by {review.user?.username || 'Anonymous'}
+                    by {review.user?.name || 'Anonymous'}
                   </Typography>
                 </Box>
                 <Typography variant="body1">{review.comment}</Typography>

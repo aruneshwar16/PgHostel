@@ -15,7 +15,7 @@ const Gallery = () => {
   const [loginSuccess, setLoginSuccess] = useState(false);
 
   useEffect(() => {
-    axios.get('http://localhost:5002/api/gallery')
+    axios.get(`${process.env.REACT_APP_API_URL}/api/gallery`)
       .then((res) => setImages(res.data))
       .catch((err) => console.error('Error fetching images:', err));
   }, []);
@@ -32,16 +32,17 @@ const Gallery = () => {
     event.preventDefault();
     setIsLoading(true);
     try {
-      if (username === 'arun' && password === 'arun123') {
+      // Check for default admin credentials
+      if (username === 'admin' && password === 'admin123') {
         localStorage.setItem('token', 'adminToken');
         setIsAdminLoggedIn(true);
         setLoginSuccess(true);
       } else {
-        alert('Invalid credentials. Use username: arun, password: arun123');
+        alert('Invalid credentials. Only admin can login!');
       }
     } catch (error) {
       console.error('Login error:', error);
-      alert('Invalid credentials. Use username: arun, password: arun123');
+      alert('Login failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -69,31 +70,36 @@ const Gallery = () => {
 
     try {
       const token = localStorage.getItem('token');
-      console.log('Token:', token); // Debug log
-
       if (!token) {
         throw new Error('No authentication token found');
       }
 
-      const headers = {
-        'Content-Type': 'multipart/form-data',
-        'Authorization': `Bearer ${token}`
-      };
-      console.log('Request headers:', headers); // Debug log
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/gallery`,
+        formData,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        }
+      );
 
-      const response = await axios.post('http://localhost:5002/api/gallery', formData, { headers });
-      console.log('Upload response:', response.data); // Debug log
+      // Refresh the images list
+      const updatedImages = await axios.get(`${process.env.REACT_APP_API_URL}/api/gallery`);
+      setImages(updatedImages.data);
       
-      window.location.reload();
+      // Clear the form
+      setFile(null);
+      if (event.target.querySelector('input[type="file"]')) {
+        event.target.querySelector('input[type="file"]').value = '';
+      }
+      
+      alert('Image uploaded successfully!');
     } catch (err) {
       console.error('Upload failed:', err);
-      console.error('Error response:', err.response?.data); // Debug log
-      
       if (err.response?.status === 401) {
         alert('Authentication failed. Please log in again.');
         handleLogout();
-      } else if (err.response?.status === 403) {
-        alert('You do not have permission to upload images.');
       } else {
         alert('Failed to upload image. Please try again.');
       }
@@ -227,21 +233,41 @@ const Gallery = () => {
 
       {/* Display Images */}
       <Grid container spacing={4} sx={{ mt: 4 }}>
-        {images.length === 0 ? (
-          <Typography variant="h6" align="center" sx={{ width: '100%' }}>
-            No images found.
-          </Typography>
-        ) : (
-          images.map((img, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <Box sx={{ p: 2, border: 1, borderColor: 'gray', borderRadius: 2, boxShadow: 2 }}>
-                <Typography variant="h6" align="center">{img.title}</Typography>
-                <img src={img.imageUrl} alt={img.title} style={{ width: '100%', borderRadius: '10px' }} />
-              </Box>
-            </Grid>
-          ))
-        )}
+  {images.length === 0 ? (
+    <Typography variant="h6" align="center" sx={{ width: '100%' }}>
+      No images found⛔.
+    </Typography>
+  ) : (
+    images.map((img, index) => (
+      <Grid item xs={12} sm={6} md={4} key={index}>
+        <Box
+          sx={{
+            p: 2,
+            border: 1,
+            borderColor: 'gray',
+            borderRadius: 2,
+            boxShadow: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Typography variant="h6" align="center">{img.title}</Typography>
+          <img
+            src={img.imageUrl}
+            alt={img.title}
+            style={{
+              width: '300px', 
+              height: '300px', 
+              objectFit : 'cover',
+              borderRadius: '10px',
+            }}
+          />
+        </Box>
       </Grid>
+    ))
+  )}
+</Grid>
     </Container>
   );
 };

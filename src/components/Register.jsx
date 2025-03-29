@@ -56,20 +56,22 @@ const Register = () => {
       try {
         // Check if server is reachable
         try {
-          await axios.get('http://localhost:5002/test');
+          await axios.get(`${process.env.REACT_APP_API_URL}/test`);
         } catch (error) {
           throw new Error('Cannot connect to server. Please make sure the backend server is running.');
         }
   
         console.log('Attempting to register with:', {
-          username: formData.name,
+          name: formData.name,
           email: formData.email,
+          phone: formData.phone,
           password: formData.password
         });
   
-        const response = await axios.post('http://localhost:5002/api/auth/register', {
-          username: formData.name,
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
+          name: formData.name,
           email: formData.email,
+          phone: formData.phone,
           password: formData.password
         });
   
