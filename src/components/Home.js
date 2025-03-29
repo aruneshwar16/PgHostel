@@ -153,7 +153,7 @@ const Home = () => {
       {/* WHY CHOOSE US SECTION */}
       <Container maxWidth="lg" sx={{ mt: 8, mb: 8 }}>
   <Typography variant="h3" component="h2" align="center" gutterBottom>
-    Why Choose Us?
+  Empowering Women with Comfort & Security!
   </Typography>
   <Grid container spacing={4} sx={{ mt: 4 }}>
     {[

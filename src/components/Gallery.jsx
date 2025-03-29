@@ -15,9 +15,43 @@ const Gallery = () => {
   const [loginSuccess, setLoginSuccess] = useState(false);
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/api/gallery`)
-      .then((res) => setImages(res.data))
-      .catch((err) => console.error('Error fetching images:', err));
+    const fetchImages = async () => {
+      try {
+        const apiUrl = process.env.REACT_APP_API_URL;
+        if (!apiUrl) {
+          console.error('API URL is not configured');
+          return;
+        }
+
+        console.log('Fetching gallery from:', `${apiUrl}/api/gallery`);
+        const response = await axios.get(`${apiUrl}/api/gallery`, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        console.log('Gallery API Response:', response.data);
+        
+        if (!response.data) {
+          console.error('No data received from gallery API');
+          setImages([]);
+          return;
+        }
+
+        const imagesData = Array.isArray(response.data) ? response.data : 
+                          response.data.images ? response.data.images : 
+                          [];
+        
+        console.log('Processed gallery data:', imagesData);
+        setImages(imagesData);
+      } catch (error) {
+        console.error('Error fetching gallery:', error);
+        console.error('Error response:', error.response?.data);
+        setImages([]);
+      }
+    };
+
+    fetchImages();
   }, []);
 
   useEffect(() => {
@@ -62,6 +96,12 @@ const Gallery = () => {
     event.preventDefault();
     if (!file) return alert('Please select an image.');
 
+    const apiUrl = process.env.REACT_APP_API_URL;
+    if (!apiUrl) {
+      alert('API URL is not configured');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('image', file);
     formData.append('title', category);
@@ -75,17 +115,18 @@ const Gallery = () => {
       }
 
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/gallery`,
+        `${apiUrl}/api/gallery`,
         formData,
         {
           headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data'
           }
         }
       );
 
       // Refresh the images list
-      const updatedImages = await axios.get(`${process.env.REACT_APP_API_URL}/api/gallery`);
+      const updatedImages = await axios.get(`${apiUrl}/api/gallery`);
       setImages(updatedImages.data);
       
       // Clear the form
