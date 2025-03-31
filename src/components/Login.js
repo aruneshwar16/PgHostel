@@ -25,7 +25,7 @@ const Login = () => {
 
     try {
       console.log("Login attempted:", formData);
-      const response = await axios.post("http://localhost:5002/api/auth/login", formData);
+      const response = await axios.post("https://pg-sai-backend.onrender.com/api/auth/login", formData);
       
       // Store the token and user info
       localStorage.setItem("token", response.data.token);
@@ -52,7 +52,7 @@ const Login = () => {
     <Box
   sx={{
     backgroundImage: {
-      xs: "url('https://img.freepik.com/free-vector/women-s-day-pattern-with-women-faces_23-2148403753.jpg')",  // Mobile view (empty or add a mobile URL)
+      xs: "url('https://img.freepik.com/free-vector/follow-news-stay-home-covid-9-awareness-vector_53876-167999.jpg?t=st=1743431112~exp=1743434712~hmac=313a37f516d083ee69a13b99fe64d670b8f46395227d2a3f9c512ed530ed5f3c&w=740')",  // Mobile view (empty or add a mobile URL)
       sm: "url('https://t3.ftcdn.net/jpg/06/46/82/48/360_F_646824853_Ofj7OmU84JIIhqilkumCbz2AdZpudRMY.jpg')"  // Desktop view
     },
     backgroundSize: "cover",
@@ -69,8 +69,8 @@ const Login = () => {
     elevation={3}
     sx={{
       p: 4,
-      backgroundColor: "rgba(255, 255, 255, 0.7)", // Semi-transparent white
-      backdropFilter: "blur(5px)", // Adds blur effect for better readability
+      backgroundColor: "rgba(255, 255, 255, 0.31)", // Semi-transparent white
+      backdropFilter: "blur(1px)", // Adds blur effect for better readability
       borderRadius: "10px", // Rounded corners
       boxShadow: "0px 4px 10px rgba(0,0,0,0.1)", // Soft shadow
     }}

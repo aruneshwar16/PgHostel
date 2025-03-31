@@ -18,12 +18,37 @@ const Reviews = () => {
 
   const fetchReviews = async () => {
     try {
-      console.log('Fetching reviews from:', `${config.apiUrl}/api/reviews`);
-      const response = await axios.get(`${config.apiUrl}/api/reviews`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-          'Content-Type': 'application/json'
-        }
+      const token = localStorage.getItem('token');
+      console.log('Current token:', token ? 'Present' : 'Missing');
+      
+      const apiUrl = `${config.apiUrl}/api/reviews`;
+      console.log('Fetching reviews from:', apiUrl);
+      
+      // First, test if we can reach the backend
+      try {
+        const testResponse = await axios.get(`${config.apiUrl}/test`);
+        console.log('Backend connection test:', testResponse.data);
+      } catch (testError) {
+        console.error('Backend connection test failed:', testError);
+        setError('Cannot connect to server. Please try again later.');
+        return;
+      }
+
+      const headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      };
+
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      console.log('Request headers:', headers);
+
+      const response = await axios.get(apiUrl, {
+        headers,
+        withCredentials: true,
+        timeout: 10000 // 10 second timeout
       });
       
       console.log('Reviews API Response:', response.data);
@@ -43,10 +68,29 @@ const Reviews = () => {
     } catch (error) {
       console.error('Error fetching reviews:', error);
       console.error('Error response:', error.response?.data);
-      setReviews([]);
-      if (error.response?.status === 401) {
-        navigate('/login');
+      console.error('Error status:', error.response?.status);
+      console.error('Error headers:', error.response?.headers);
+      console.error('Request URL:', error.config?.url);
+      console.error('Request headers:', error.config?.headers);
+      console.error('Error message:', error.message);
+      
+      if (!error.response) {
+        // Network error
+        setError('Network error. Please check your connection and try again.');
+      } else if (error.response?.status === 401) {
+        setError('Please login to view reviews');
+        setTimeout(() => navigate('/login'), 2000);
+      } else if (error.response?.status === 403) {
+        setError('Access denied. Please try logging in again.');
+        setTimeout(() => navigate('/login'), 2000);
+      } else if (error.response?.status === 404) {
+        setError('Reviews endpoint not found. Please try again later.');
+      } else if (error.response?.status === 500) {
+        setError('Server error. Please try again later.');
+      } else {
+        setError('Failed to fetch reviews. Please try again later.');
       }
+      setReviews([]);
     }
   };
 
@@ -80,12 +124,33 @@ const Reviews = () => {
         throw new Error('Please login to submit a review');
       }
 
-      console.log('Submitting review to:', `${config.apiUrl}/api/reviews`);
-      const response = await axios.post(`${config.apiUrl}/api/reviews`, newReview, {
-        headers: { 
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+      // First, test if we can reach the backend
+      try {
+        const testResponse = await axios.get(`${config.apiUrl}/test`);
+        console.log('Backend connection test:', testResponse.data);
+      } catch (testError) {
+        console.error('Backend connection test failed:', testError);
+        setError('Cannot connect to server. Please try again later.');
+        setIsLoading(false);
+        return;
+      }
+
+      const apiUrl = `${config.apiUrl}/api/reviews`;
+      console.log('Submitting review to:', apiUrl);
+      console.log('Review data:', newReview);
+      
+      const headers = { 
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      };
+
+      console.log('Request headers:', headers);
+
+      const response = await axios.post(apiUrl, newReview, {
+        headers,
+        withCredentials: true,
+        timeout: 10000 // 10 second timeout
       });
 
       console.log('Review submission response:', response.data);
@@ -96,7 +161,27 @@ const Reviews = () => {
     } catch (error) {
       console.error('Error submitting review:', error);
       console.error('Error response:', error.response?.data);
-      setError(error.response?.data?.message || error.message || 'Error submitting review');
+      console.error('Error status:', error.response?.status);
+      console.error('Request URL:', error.config?.url);
+      console.error('Request headers:', error.config?.headers);
+      console.error('Error message:', error.message);
+      
+      if (!error.response) {
+        // Network error
+        setError('Network error. Please check your connection and try again.');
+      } else if (error.response?.status === 401) {
+        setError('Please login to submit a review');
+        setTimeout(() => navigate('/login'), 2000);
+      } else if (error.response?.status === 403) {
+        setError('Access denied. Please try logging in again.');
+        setTimeout(() => navigate('/login'), 2000);
+      } else if (error.response?.status === 404) {
+        setError('Reviews endpoint not found. Please try again later.');
+      } else if (error.response?.status === 500) {
+        setError('Server error. Please try again later.');
+      } else {
+        setError(error.response?.data?.message || error.message || 'Error submitting review');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -109,7 +194,11 @@ const Reviews = () => {
           xs: "url('https://img.freepik.com/free-vector/organic-flat-feedback-concept-illustrated_23-2148951368.jpg?ga=GA1.1.1199500948.1737623741&semt=ais_hybrid')",  // Mobile view
           sm: "url('https://wallpapers.com/images/hd/women-background-n9t5k0r03kw0qze3.jpg')"  // Tablet & Desktop
         },
-        backgroundSize: "cover",
+        backgroundSize: {
+          xs: "contain", // Adjusted for mobile view
+          sm: "cover"    // Desktop & Tablets
+        },
+        
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundAttachment: {

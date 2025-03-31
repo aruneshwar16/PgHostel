@@ -11,9 +11,11 @@ const Gallery = () => {
   const [file, setFile] = useState(null);
   const [category, setCategory] = useState('Rooms');
   const [images, setImages] = useState([]);
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(localStorage.getItem('token') !== null);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(!!localStorage.getItem('token'));
   const [isLoading, setIsLoading] = useState(false);
   const [loginSuccess, setLoginSuccess] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [imagesPerPage] = useState(12);
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -47,6 +49,10 @@ const Gallery = () => {
     };
 
     fetchImages();
+  }, []);
+
+  useEffect(() => {
+    setIsAdminLoggedIn(!!localStorage.getItem('token'));
   }, []);
 
   useEffect(() => {
@@ -138,167 +144,252 @@ const Gallery = () => {
     }
   };
 
+  // View More Button Handler
+  const handleViewMore = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  // Calculate the index of the last image to display
+  const indexOfLastImage = currentPage * imagesPerPage;
+  const indexOfFirstImage = indexOfLastImage - imagesPerPage;
+  const currentImages = images.slice(indexOfFirstImage, indexOfLastImage);
+
+  // Calculate if there are more images to show
+  const hasMoreImages = images.length > indexOfLastImage;
+
   return (
-    <Container maxWidth="lg" sx={{ mt: 5 }}>
-      <Typography variant="h4" gutterBottom align="center">
-        Image Gallery
-      </Typography>
-      <Typography variant="h6" gutterBottom align="center">
-        (Only for admin access!)
-      </Typography>
+    <Box
+      sx={{
+        minHeight: '100vh',
+        backgroundImage: `url('https://img.freepik.com/free-vector/abstract-wavy-background_53876-99232.jpg?ga=GA1.1.1199500948.1737623741')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+        backgroundRepeat: 'no-repeat',
+        position: 'relative',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 1,
+        },
+      }}
+    >
+      <Container 
+        maxWidth="lg" 
+        sx={{ 
+          position: 'relative',
+          zIndex: 2,
+          pt: { xs: 3, md: 5 },
+          pb: { xs: 3, md: 5 }
+        }}
+      >
+        <Typography 
+          variant="h4" 
+          gutterBottom 
+          align="center"
+          sx={{ 
+            color: '#1a237e',
+            fontWeight: 'bold',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.1)',
+            mb: 2
+          }}
+        >
+          Image Gallery
+        </Typography>
+        <Typography 
+          variant="h6" 
+          gutterBottom 
+          align="center"
+          sx={{ 
+            color: '#455a64',
+            mb: 4
+          }}
+        >
+          (Only for admin access!)
+        </Typography>
 
-      <Grid container spacing={3} justifyContent="center">
-        {!isAdminLoggedIn ? (
-          <Grid item xs={12} sm={6}>
-            <Box component="form" noValidate onSubmit={handleLogin} sx={{ p: 3, border: 1, borderRadius: 2, boxShadow: 3 }}>
-              <Typography variant="h6" align="center"> Admin Login</Typography>
-              <TextField
-                fullWidth
-                label="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                margin="normal"
-                required
-                disabled={isLoading}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <AccountCircle />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              <TextField
-                fullWidth
-                label="Password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                margin="normal"
-                required
-                disabled={isLoading}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Lock />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                disabled={isLoading}
-                sx={{ mt: 2 }}
-              >
-                Login
-              </Button>
-            </Box>
-          </Grid>
-        ) : (
-          <>
-            {loginSuccess && (
-              <Grid item xs={12}>
-                <Alert severity="success" sx={{ textAlign: 'center', mb: 2 }}>
-                  Successful admin login✅
-                </Alert>
-              </Grid>
-            )}
-
-            <Grid item xs={12}>
-              <Typography variant="h5" align="center" sx={{ mt: 3 }}>
-                Welcome, Admin!
-              </Typography>
-            </Grid>
-
-            {/* Logout Button */}
-            <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
-              <Button variant="outlined" color="error" onClick={handleLogout} startIcon={<Logout />}>
-                Logout
-              </Button>
-            </Grid>
-
-            {/* Upload Image Section */}
+        <Grid container spacing={3} justifyContent="center">
+          {!isAdminLoggedIn ? (
             <Grid item xs={12} sm={6}>
-              <Box component="form" noValidate onSubmit={handleUpload} sx={{ p: 3, border: 1, borderRadius: 2, boxShadow: 3 }}>
-                <Typography variant="h6">Add Image</Typography>
-                <input
-                  type="file"
-                  onChange={(e) => setFile(e.target.files[0])}
-                  required
-                  disabled={isLoading}
-                  style={{ display: 'block', margin: '10px 0' }}
-                />
+              <Box component="form" noValidate onSubmit={handleLogin} sx={{ p: 3, border: 1, borderRadius: 2, boxShadow: 3 }}>
+                <Typography variant="h6" align="center"> Admin Login</Typography>
                 <TextField
                   fullWidth
-                  label="Category"
-                  select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
+                  label="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   margin="normal"
                   required
                   disabled={isLoading}
-                >
-                  <MenuItem value="Rooms">Rooms</MenuItem>
-                  <MenuItem value="Facilities">Facilities</MenuItem>
-                  <MenuItem value="Events">Events</MenuItem>
-                </TextField>
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <TextField
+                  fullWidth
+                  label="Password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  margin="normal"
+                  required
+                  disabled={isLoading}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Lock />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
                 <Button
                   type="submit"
                   fullWidth
                   variant="contained"
-                  color="secondary"
+                  color="primary"
                   disabled={isLoading}
                   sx={{ mt: 2 }}
                 >
-                  Upload
+                  Login
                 </Button>
               </Box>
             </Grid>
-          </>
-        )}
-      </Grid>
+          ) : (
+            <>
+              {loginSuccess && (
+                <Grid item xs={12}>
+                  <Alert severity="success" sx={{ textAlign: 'center', mb: 2 }}>
+                    Successful admin login✅
+                  </Alert>
+                </Grid>
+              )}
 
-      {/* Display Images */}
-      <Grid container spacing={4} sx={{ mt: 4 }}>
-  {images.length === 0 ? (
-    <Typography variant="h6" align="center" sx={{ width: '100%' }}>
-      No images found⛔.
-    </Typography>
-  ) : (
-    images.map((img, index) => (
-      <Grid item xs={12} sm={6} md={4} key={index}>
-        <Box
-          sx={{
-            p: 2,
-            border: 1,
-            borderColor: 'gray',
-            borderRadius: 2,
-            boxShadow: 2,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Typography variant="h6" align="center">{img.title}</Typography>
-          <img
-            src={img.imageUrl}
-            alt={img.title}
-            style={{
-              width: '300px', 
-              height: '300px', 
-              objectFit : 'cover',
-              borderRadius: '10px',
-            }}
-          />
-        </Box>
-      </Grid>
-    ))
-  )}
-</Grid>
-    </Container>
+              <Grid item xs={12}>
+                <Typography variant="h5" align="center" sx={{ mt: 3 }}>
+                  Welcome, Admin!
+                </Typography>
+              </Grid>
+
+              {/* Logout Button */}
+              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
+                <Button variant="outlined" color="error" onClick={handleLogout} startIcon={<Logout />}>
+                  Logout
+                </Button>
+              </Grid>
+
+              {/* Upload Image Section */}
+              <Grid item xs={12} sm={6}>
+                <Box component="form" noValidate onSubmit={handleUpload} sx={{ p: 3, border: 1, borderRadius: 2, boxShadow: 3 }}>
+                  <Typography variant="h6">Add Image</Typography>
+                  <input
+                    type="file"
+                    onChange={(e) => setFile(e.target.files[0])}
+                    required
+                    disabled={isLoading}
+                    style={{ display: 'block', margin: '10px 0' }}
+                  />
+                  <TextField
+                    fullWidth
+                    label="Category"
+                    select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    margin="normal"
+                    required
+                    disabled={isLoading}
+                  >
+                    <MenuItem value="Rooms">Rooms</MenuItem>
+                    <MenuItem value="Facilities">Facilities</MenuItem>
+                    <MenuItem value="Events">Events</MenuItem>
+                    <MenuItem value="Food">Food</MenuItem>
+
+                  </TextField>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="secondary"
+                    disabled={isLoading}
+                    sx={{ mt: 2 }}
+                  >
+                    Upload
+                  </Button>
+                </Box>
+              </Grid>
+            </>
+          )}
+        </Grid>
+
+        {/* Display Images */}
+        <Grid container spacing={4} sx={{ mt: 4 }}>
+          {currentImages.length === 0 ? (
+            <Typography variant="h6" align="center" sx={{ width: '100%' }}>
+              No images found⛔.
+            </Typography>
+          ) : (
+            currentImages.map((img, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <Box
+                  sx={{
+                    p: 2,
+                    border: 1,
+                    borderColor: 'gray',
+                    borderRadius: 2,
+                    boxShadow: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Typography variant="h6" align="center">{img.title}</Typography>
+                  <img
+                    src={img.imageUrl}
+                    alt={img.title}
+                    style={{
+                      width: '300px', 
+                      height: '300px', 
+                      objectFit: 'cover',
+                      borderRadius: '10px',
+                    }}
+                  />
+                </Box>
+              </Grid>
+            ))
+          )}
+        </Grid>
+
+        {/* View More Button */}
+        {hasMoreImages && (
+          <Box sx={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            mt: 4,
+            mb: 4 // Add bottom margin
+          }}>
+            <Button 
+              variant="contained" 
+              color="primary" 
+              onClick={handleViewMore}
+              sx={{
+                minWidth: '200px', // Make button wider
+                py: 1.5, // Add more vertical padding
+                fontSize: '1.1rem' // Make text slightly larger
+              }}
+            >
+              View More ({images.length - indexOfLastImage} )
+            </Button>
+          </Box>
+        )}
+      </Container>
+    </Box>
   );
 };
 

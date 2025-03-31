@@ -33,6 +33,12 @@ const Features = () => {
       image: 'https://e1.pxfuel.com/desktop-wallpaper/27/116/desktop-wallpaper-women-safety.jpg '
     },
     {
+      title: 'We Encourage Working Women',
+      description: 'we motivate working women to work and earn',
+      icon: <SecurityIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
+      image: 'https://m.media-amazon.com/images/S/pv-target-images/e25ada89898c20fe2448bd1952de096f175cb4ab99927826efb0490f45592971.jpg'
+    },
+    {
       title: 'Home-Made Foods',
       description: 'Nutritious and delicious meals served three times a day',
       icon: <LocalDiningIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,

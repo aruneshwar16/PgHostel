@@ -70,7 +70,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const slides = [
-    "https://content.jdmagicbox.com/comp/coimbatore/t9/0422px422.x422.180531090829.i7t9/catalogue/baby-doll-women-s-hostel-keeranatham-coimbatore-hostels-7xjejehvj6.jpg",
+    "https://t4.ftcdn.net/jpg/02/96/15/77/360_F_296157719_pE7CdukTlYlklMi7TKsjnHacA6uaDYLs.jpg",
     "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?ixlib=rb-4.0.3",
     "https://www.thetulips.in/wp-content/uploads/2016/06/Room-20-1024x683.jpg",
     "https://play-zelo-production.s3.ap-south-1.amazonaws.com/uploads/center_caption_photo/photo/624e836f0b80f700015c6af3/07.jpg",
