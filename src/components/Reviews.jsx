@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Paper, TextField, Button, Typography, Box, Rating, Card, CardContent } from '@mui/material';
+import { Container, Paper, TextField, Button, Typography, Box, Rating, Card, CardContent, Alert, CircularProgress } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import config from '../config';
+import { testConnection, handleApiError } from '../utils/api';
 
 const Reviews = () => {
   const navigate = useNavigate();
@@ -11,6 +12,8 @@ const Reviews = () => {
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [connectionError, setConnectionError] = useState(null);
+  const [isConnecting, setIsConnecting] = useState(true);
 
   useEffect(() => {
     fetchReviews();
@@ -18,22 +21,19 @@ const Reviews = () => {
 
   const fetchReviews = async () => {
     try {
+      setIsConnecting(true);
+      const isConnected = await testConnection();
+      if (!isConnected) {
+        setConnectionError('Unable to connect to the server. Please check your internet connection and try again.');
+        return;
+      }
+
       const token = localStorage.getItem('token');
       console.log('Current token:', token ? 'Present' : 'Missing');
       
       const apiUrl = `${config.apiUrl}/api/reviews`;
       console.log('Fetching reviews from:', apiUrl);
       
-      // First, test if we can reach the backend
-      try {
-        const testResponse = await axios.get(`${config.apiUrl}/test`);
-        console.log('Backend connection test:', testResponse.data);
-      } catch (testError) {
-        console.error('Backend connection test failed:', testError);
-        setError('Cannot connect to server. Please try again later.');
-        return;
-      }
-
       const headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
@@ -65,6 +65,7 @@ const Reviews = () => {
       
       console.log('Processed reviews data:', reviewsData);
       setReviews(reviewsData);
+      setConnectionError(null);
     } catch (error) {
       console.error('Error fetching reviews:', error);
       console.error('Error response:', error.response?.data);
@@ -74,23 +75,10 @@ const Reviews = () => {
       console.error('Request headers:', error.config?.headers);
       console.error('Error message:', error.message);
       
-      if (!error.response) {
-        // Network error
-        setError('Network error. Please check your connection and try again.');
-      } else if (error.response?.status === 401) {
-        setError('Please login to view reviews');
-        setTimeout(() => navigate('/login'), 2000);
-      } else if (error.response?.status === 403) {
-        setError('Access denied. Please try logging in again.');
-        setTimeout(() => navigate('/login'), 2000);
-      } else if (error.response?.status === 404) {
-        setError('Reviews endpoint not found. Please try again later.');
-      } else if (error.response?.status === 500) {
-        setError('Server error. Please try again later.');
-      } else {
-        setError('Failed to fetch reviews. Please try again later.');
-      }
+      setConnectionError(handleApiError(error));
       setReviews([]);
+    } finally {
+      setIsConnecting(false);
     }
   };
 
@@ -119,20 +107,15 @@ const Reviews = () => {
     setIsLoading(true);
 
     try {
+      const isConnected = await testConnection();
+      if (!isConnected) {
+        setConnectionError('Unable to connect to the server. Please check your internet connection and try again.');
+        return;
+      }
+
       const token = localStorage.getItem('token');
       if (!token) {
         throw new Error('Please login to submit a review');
-      }
-
-      // First, test if we can reach the backend
-      try {
-        const testResponse = await axios.get(`${config.apiUrl}/test`);
-        console.log('Backend connection test:', testResponse.data);
-      } catch (testError) {
-        console.error('Backend connection test failed:', testError);
-        setError('Cannot connect to server. Please try again later.');
-        setIsLoading(false);
-        return;
       }
 
       const apiUrl = `${config.apiUrl}/api/reviews`;
@@ -154,10 +137,11 @@ const Reviews = () => {
       });
 
       console.log('Review submission response:', response.data);
-      setReviews(prev => [...prev, response.data]);
+    
       setSuccessMessage('✅ Thank you for your review!');
       setTimeout(() => setSuccessMessage(''), 4000);
       setNewReview({ rating: 0, comment: '' });
+      setConnectionError(null);
     } catch (error) {
       console.error('Error submitting review:', error);
       console.error('Error response:', error.response?.data);
@@ -166,22 +150,7 @@ const Reviews = () => {
       console.error('Request headers:', error.config?.headers);
       console.error('Error message:', error.message);
       
-      if (!error.response) {
-        // Network error
-        setError('Network error. Please check your connection and try again.');
-      } else if (error.response?.status === 401) {
-        setError('Please login to submit a review');
-        setTimeout(() => navigate('/login'), 2000);
-      } else if (error.response?.status === 403) {
-        setError('Access denied. Please try logging in again.');
-        setTimeout(() => navigate('/login'), 2000);
-      } else if (error.response?.status === 404) {
-        setError('Reviews endpoint not found. Please try again later.');
-      } else if (error.response?.status === 500) {
-        setError('Server error. Please try again later.');
-      } else {
-        setError(error.response?.data?.message || error.message || 'Error submitting review');
-      }
+      setConnectionError(handleApiError(error));
     } finally {
       setIsLoading(false);
     }
@@ -190,29 +159,33 @@ const Reviews = () => {
   return (
     <Box
       sx={{
-        backgroundImage: {
-          xs: "url('https://img.freepik.com/free-vector/organic-flat-feedback-concept-illustrated_23-2148951368.jpg?ga=GA1.1.1199500948.1737623741&semt=ais_hybrid')",  // Mobile view
-          sm: "url('https://wallpapers.com/images/hd/women-background-n9t5k0r03kw0qze3.jpg')"  // Tablet & Desktop
+        minHeight: '100vh',
+        backgroundImage: `url('https://img.freepik.com/free-vector/abstract-wavy-background_53876-99232.jpg?ga=GA1.1.1199500948.1737623741')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+        backgroundRepeat: 'no-repeat',
+        position: 'relative',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 1,
         },
-        backgroundSize: {
-          xs: "contain", // Adjusted for mobile view
-          sm: "cover"    // Desktop & Tablets
-        },
-        
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: {
-          xs: "scroll", // Mobile-friendly
-          sm: "fixed"   // Desktop & Tablets
-        },
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "column"
       }}
     >
-      <Container maxWidth="md">
+      <Container 
+        maxWidth="md" 
+        sx={{ 
+          position: 'relative',
+          zIndex: 2,
+          pt: { xs: 3, md: 5 },
+          pb: { xs: 3, md: 5 }
+        }}
+      >
         <Paper elevation={3} sx={{ p: 4, mb: 4, backgroundColor: "rgba(255, 255, 255, 0.7)", backdropFilter: "blur(5px)", borderRadius: "10px", boxShadow: "0px 4px 10px rgba(0,0,0,0.1)" }}>
           <Typography variant="h4" component="h1" align="center" gutterBottom>
             <img src="https://cdn-icons-png.freepik.com/256/2065/2065224.png" alt="Review Icon" width="40" height="40" style={{ verticalAlign: "middle", marginRight: "10px" }} />
@@ -221,13 +194,30 @@ const Reviews = () => {
 
           {successMessage && <Typography color="success" align="center" sx={{ mb: 2 }}>{successMessage}</Typography>}
 
+          {isConnecting ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+              <CircularProgress />
+            </Box>
+          ) : connectionError ? (
+            <Alert 
+              severity="error" 
+              sx={{ 
+                mb: 3,
+                '& .MuiAlert-message': {
+                  width: '100%',
+                  textAlign: 'center'
+                }
+              }}
+            >
+              {connectionError}
+            </Alert>
+          ) : null}
+
           <Box sx={{ display: "flex", alignItems: "center", mb: 2, justifyContent: "center" }}>
             <Typography variant="h6" sx={{ mr: 1 }}>Overall:</Typography>
             <Rating value={parseFloat(calculateAverageRating())} readOnly precision={0.1} />
             <Typography variant="h6" sx={{ ml: 1 }}>({calculateAverageRating()})</Typography>
           </Box>
-
-          {error && <Typography color="error" align="center" sx={{ mb: 2 }}>{error}</Typography>}
 
           <Box component="form" onSubmit={handleSubmit}>
             <Box sx={{ mb: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

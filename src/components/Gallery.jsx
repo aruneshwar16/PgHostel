@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Box, TextField, Button, Container, Typography, Grid, MenuItem, Alert } from '@mui/material';
+import { Box, TextField, Button, Container, Typography, Grid, MenuItem, Alert, CircularProgress } from '@mui/material';
 import { AccountCircle, Lock, Image, Logout } from '@mui/icons-material';
 import InputAdornment from '@mui/material/InputAdornment';
 import config from '../config';
+import { testConnection, handleApiError } from '../utils/api';
 
 const Gallery = () => {
   const [username, setUsername] = useState('');
@@ -16,15 +17,26 @@ const Gallery = () => {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [imagesPerPage] = useState(12);
+  const [connectionError, setConnectionError] = useState(null);
+  const [isConnecting, setIsConnecting] = useState(true);
 
   useEffect(() => {
     const fetchImages = async () => {
       try {
+        setIsConnecting(true);
+        // Test connection first
+        const isConnected = await testConnection();
+        if (!isConnected) {
+          setConnectionError('Unable to connect to the server. Please check your internet connection and try again.');
+          return;
+        }
+
         console.log('Fetching gallery from:', `${config.apiUrl}/api/gallery`);
         const response = await axios.get(`${config.apiUrl}/api/gallery`, {
           headers: {
             'Content-Type': 'application/json'
-          }
+          },
+          timeout: 10000 // 10 second timeout
         });
         
         console.log('Gallery API Response:', response.data);
@@ -41,10 +53,14 @@ const Gallery = () => {
         
         console.log('Processed gallery data:', imagesData);
         setImages(imagesData);
+        setConnectionError(null);
       } catch (error) {
         console.error('Error fetching gallery:', error);
         console.error('Error response:', error.response?.data);
         setImages([]);
+        setConnectionError(handleApiError(error));
+      } finally {
+        setIsConnecting(false);
       }
     };
 
@@ -211,6 +227,25 @@ const Gallery = () => {
         >
           (Only for admin access!)
         </Typography>
+
+        {isConnecting ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+            <CircularProgress />
+          </Box>
+        ) : connectionError ? (
+          <Alert 
+            severity="error" 
+            sx={{ 
+              mb: 3,
+              '& .MuiAlert-message': {
+                width: '100%',
+                textAlign: 'center'
+              }
+            }}
+          >
+            {connectionError}
+          </Alert>
+        ) : null}
 
         <Grid container spacing={3} justifyContent="center">
           {!isAdminLoggedIn ? (
