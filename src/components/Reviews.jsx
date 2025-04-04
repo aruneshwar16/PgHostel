@@ -19,12 +19,14 @@ const Reviews = () => {
     fetchReviews();
   }, []);
 
+  
+
   const fetchReviews = async () => {
     try {
       setIsConnecting(true);
       const isConnected = await testConnection();
       if (!isConnected) {
-        setConnectionError('Unable to connect to the server. Please check your internet connection and try again.');
+        setConnectionError('Unable to connect to the server. Please check your internet ⛔ connection and try again.');
         return;
       }
 
@@ -160,7 +162,7 @@ const Reviews = () => {
     <Box
       sx={{
         minHeight: '100vh',
-        backgroundImage: `url('https://img.freepik.com/free-vector/abstract-wavy-background_53876-99232.jpg?ga=GA1.1.1199500948.1737623741')`,
+        backgroundImage: `url('https://img.freepik.com/free-vector/hand-drawn-iranian-women-illustration_23-2149855924.jpg?ga=GA1.1.1199500948.1737623741')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
@@ -173,7 +175,12 @@ const Reviews = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          zIndex: 1,
+          backgroundColor: 'rgba(0, 0, 0, 0)',
+          zIndex: -1,
+        },
+        // Mobile specific background image
+        '@media (max-width: 600px)': {
+          backgroundImage: `url('https://img.freepik.com/premium-vector/we-can-it-poster-international-womens-day-illustration-with-women-different-nationalities-cultures_10083-900.jpg?ga=GA1.1.1199500948.1737623741')`,
         },
       }}
     >
@@ -186,7 +193,7 @@ const Reviews = () => {
           pb: { xs: 3, md: 5 }
         }}
       >
-        <Paper elevation={3} sx={{ p: 4, mb: 4, backgroundColor: "rgba(255, 255, 255, 0.7)", backdropFilter: "blur(5px)", borderRadius: "10px", boxShadow: "0px 4px 10px rgba(0,0,0,0.1)" }}>
+        <Paper elevation={3} sx={{ p: 4, mb: 4, backgroundColor: "rgba(255, 255, 255, 0.41)", backdropFilter: "blur(5px)", borderRadius: "10px", boxShadow: "0px 4px 10px rgba(0,0,0,0.1)" }}>
           <Typography variant="h4" component="h1" align="center" gutterBottom>
             <img src="https://cdn-icons-png.freepik.com/256/2065/2065224.png" alt="Review Icon" width="40" height="40" style={{ verticalAlign: "middle", marginRight: "10px" }} />
             Review Us!
@@ -220,9 +227,8 @@ const Reviews = () => {
           </Box>
 
           <Box component="form" onSubmit={handleSubmit}>
-            <Box sx={{ mb: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Typography component="legend">Rating</Typography>
-              <Rating name="rating" value={newReview.rating} onChange={handleRatingChange} size="large" disabled={isLoading} />
+            <Box sx={{ mb: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' , fontWeight: 'bold'}}>
+            <Typography component="legend" fontWeight="bold">Rating</Typography>              <Rating name="rating" value={newReview.rating} onChange={handleRatingChange} size="large" disabled={isLoading} />
             </Box>
             <TextField fullWidth label="Your Review" name="comment" value={newReview.comment} onChange={handleChange} multiline rows={4} margin="normal" required disabled={isLoading} />
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, backgroundColor: '#8e24aa' }} disabled={isLoading || !newReview.rating}>{isLoading ? 'Submitting...' : 'Submit Review'}</Button>

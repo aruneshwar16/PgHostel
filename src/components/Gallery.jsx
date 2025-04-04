@@ -177,7 +177,7 @@ const Gallery = () => {
     <Box
       sx={{
         minHeight: '100vh',
-        backgroundImage: `url('https://img.freepik.com/free-vector/abstract-wavy-background_53876-99232.jpg?ga=GA1.1.1199500948.1737623741')`,
+        backgroundImage: `url('https://img.freepik.com/free-vector/hand-painted-watercolor-abstract-background_23-2149031588.jpg?ga=GA1.1.1199500948.1737623741&w=740')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',

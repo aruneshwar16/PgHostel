@@ -245,17 +245,25 @@ const Home = () => {
      
      
       {/* CONTACT FORM */}
-      <Container maxWidth="xs" sx={{ mt: 5, mb: 5 ,
-  
-    backgroundImage:  "linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.34)),url('https://img.freepik.com/free-vector/hand-drawn-woman-portrait-illustration_23-2150174062.jpg?ga=GA1.1.1199500948.1737623741')", 
-    backgroundSize: "cover",  // Ensures full image fits
-    backgroundPosition: "center",  // Centers the image
-    backgroundRepeat: "no-repeat", // Prevents repetition
+      <Container 
+  maxWidth="xs" 
+  sx={{ 
+    mt: 5, 
+    mb: 5,
+    backgroundImage: `
+      linear-gradient(rgba(90, 87, 87, 0.17), rgba(148, 143, 143, 0.18)),
+      url('https://img.freepik.com/free-vector/hand-drawn-iranian-women-illustration_23-2149825013.jpg?ga=GA1.1.1199500948.17')
+    `,
+    backgroundSize: "cover", 
+    backgroundPosition: "center", 
+    backgroundRepeat: "no-repeat",
     padding: 5, 
-    borderRadius: 3
+    borderRadius: 3,
+    color: "white"  // optional: makes text visible on dark background
   }}
 >
-<Typography variant="h4" align="center" sx={{ fontWeight: "bold", mb: 3,color: "#000000", display: "flex", alignItems: "center", justifyContent: "center" }}>
+
+<Typography variant="h4" align="center" sx={{ fontWeight: "bold", mb: 3,  mt: -3,color: "#000000", display: "flex", alignItems: "center", justifyContent: "center" }}>
   <img 
     src="https://cdn-icons-png.freepik.com/256/2016/2016399.png?ga=GA1.1.1199500948.1737623741" 
     alt="Contact Icon" 
@@ -269,7 +277,7 @@ const Home = () => {
     <TextField label="Name*" fullWidth {...register("name", { required: true })} sx={{ mb: 2 }} InputLabelProps={{ sx: { fontWeight: "bold", color: "black" } }}/>
     <TextField label="Email*" fullWidth {...register("email", { required: true })} sx={{ mb: 2 }} InputLabelProps={{ sx: { fontWeight: "bold", color: "black" } }}/>
     <TextField label="Message*" fullWidth multiline rows={4} {...register("message", { required: true })} sx={{ mb: 2 }}InputLabelProps={{ sx: { fontWeight: "bold", color: "black" } }}/>
-    <Button type="submit" variant="contained" sx={{ backgroundColor: "brown", color: "#fff", fontWeight: "bold", "&:hover": { backgroundColor: "#6a1b9a" } }}>
+    <Button type="submit" variant="contained" sx={{ backgroundColor: "green", color: "#fff", fontWeight: "bold", "&:hover": { backgroundColor: "#6a1b9a" } }}>
       Submit
     </Button>
   </form>

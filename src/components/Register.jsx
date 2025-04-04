@@ -4,8 +4,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import config from '../config';
 
-const backgroundImage = "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZmeHrBOns9nS3HmGr2bJsRvU3y5U2uo_OughaKC3Sysl0D5ZKmwEZ5zTUJVM-SP3S-SQ&usqp=CAU')";
-
 const Register = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -19,6 +17,7 @@ const Register = () => {
   const [errors, setErrors] = useState({});
   const [submitError, setSubmitError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,14 +25,14 @@ const Register = () => {
       ...prevState,
       [name]: value
     }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
         [name]: ''
       }));
     }
-    setSubmitError(''); // Clear submit error when user makes changes
+    setSubmitError('');
+    setSuccessMessage('');
   };
 
   const validateForm = () => {
@@ -51,50 +50,37 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitError('');
+    setSuccessMessage('');
     setIsLoading(true);
-  
+
     if (validateForm()) {
       try {
         const apiUrl = `${config.apiUrl}/api/auth/register`;
         console.log('Attempting to register with:', {
           url: apiUrl,
-          data: {
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            password: formData.password
-          }
+          data: formData
         });
-  
-        const response = await axios.post(apiUrl, {
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          password: formData.password
-        }, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
+
+        const response = await axios.post(apiUrl, formData, {
+          headers: { 'Content-Type': 'application/json' }
         });
-  
+
         console.log('Registration successful:', response.data);
-  
-        // Store the token and user data
+
+        // Store user info
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
-  
+
         // ✅ Show success message in GREEN before redirecting
-        setSubmitError('✅ Registration successful! Redirecting to login...');
-  
-        // Delay before redirecting
+        setSuccessMessage('✅ Registration successful! Redirecting to login...');
+
+        // Redirect after delay
         setTimeout(() => {
           navigate('/login');
-        }, 2000); // 2-second delay
-  
+        }, 3000);
+
       } catch (error) {
         console.error('Registration error:', error);
-        console.error('Error response:', error.response?.data);
-        
         if (error.response?.status === 405) {
           setSubmitError('❌ Registration endpoint is not available. Please try again later.');
         } else if (error.response) {
@@ -102,7 +88,7 @@ const Register = () => {
         } else if (error.request) {
           setSubmitError('❌ Cannot connect to server. Please try again later.');
         } else {
-          setSubmitError(error.message || '❌ An error occurred. Please try again.');
+          setSubmitError('❌ An error occurred. Please try again.');
         }
       } finally {
         setIsLoading(false);
@@ -111,13 +97,12 @@ const Register = () => {
       setIsLoading(false);
     }
   };
-  
 
   return (
     <Box
       sx={{
         backgroundImage: {
-          xs: "url('https://img.freepik.com/premium-photo/unity-strength-women-silhouettes-purplepink-wash_818261-31543.jpg?semt=ais_hybrid')",  // Mobile view (empty or add a mobile URL)
+          xs: "url('https://img.freepik.com/free-vector/hand-drawn-body-neutrality-illustration_23-2150291673.jpg?ga=GA1.1.1199500948.1737623741&w=740')",  
           sm: "url('https://media.licdn.com/dms/image/v2/D5612AQEU1rJZDBlwfg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1692244308608?e=2147483647&v=beta&t=PRg4fKEYMOwXmrCNrvyOv5ziOYKVzcskUR-emz9EfLY')"
         },
         backgroundSize: "cover",
@@ -129,112 +114,76 @@ const Register = () => {
         justifyContent: "center"
       }}
     >
-
-<Container maxWidth="xs">
-  <Paper
-    elevation={3}
-    sx={{
-      p: 3, // Reduced padding
-      mt: 3, // Reduced margin
-      backgroundColor: "rgba(255, 255, 255, 0.36)", 
-      backdropFilter: "blur(1px)", 
-      borderRadius: "10px", 
-      boxShadow: "0px 4px 10px rgba(0,0,0,0.1)", 
-      width: "100%", // Reduced width
-      maxWidth: "350px" // Limits max width
-    }}
-  ><Box display="flex" flexDirection="column" alignItems="center" gap={1}>
-  <video autoPlay loop muted playsInline style={{ width: "50px", height: "50px", borderRadius: "50%" }}>
-    <source src="https://cdn-icons-mp4.freepik.com/128/18986/18986443.mp4?ga=GA1.1.1199500948.1737623741&semt=ais_hybrid" type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
-  <Typography variant="h4" component="h1" gutterBottom>
-    Register
-  </Typography>
-</Box>
-
-
+      <Container maxWidth="xs">
+        <Paper
+          elevation={3}
+          sx={{
+            p: 3,
+            mt: 3,
+            backgroundColor: "rgba(136, 134, 135, 0.41)",
+            backdropFilter: "blur(1px)",
+            borderRadius: "10px",
+            boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+            width: "100%",
+            maxWidth: "350px"
+          }}
+        >
+          <Box display="flex" flexDirection="column" alignItems="center" gap={1}>
+            <video autoPlay loop muted playsInline style={{ width: "50px", height: "50px", borderRadius: "50%" }}>
+              <source src="https://cdn-icons-mp4.freepik.com/128/18986/18986443.mp4?ga=GA1.1.1199500948.1737623741&semt=ais_hybrid" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            <Typography variant="h4" component="h1" gutterBottom>
+              Register
+            </Typography>
+          </Box>
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
-            <TextField
-              fullWidth
-              label="Full Name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              margin="normal"
-              error={!!errors.name}
-              helperText={errors.name}
-              required
-              disabled={isLoading}
-            />
-            <TextField
-              fullWidth
-              label="Email"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              margin="normal"
-              error={!!errors.email}
-              helperText={errors.email}
-              required
-              disabled={isLoading}
-            />
-            <TextField
-              fullWidth
-              label="Phone Number"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              margin="normal"
-              error={!!errors.phone}
-              helperText={errors.phone}
-              required
-              disabled={isLoading}
-            />
-            <TextField
-              fullWidth
-              label="Password"
-              name="password"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              margin="normal"
-              error={!!errors.password}
-              helperText={errors.password}
-              required
-              disabled={isLoading}
-            />
-            <TextField
-              fullWidth
-              label="Confirm Password"
-              name="confirmPassword"
-              type="password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              margin="normal"
-              error={!!errors.confirmPassword}
-              helperText={errors.confirmPassword}
-              required
-              disabled={isLoading}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2, backgroundColor: '#8e24aa' }}
-              disabled={isLoading}
-            >
-              {isLoading ? 'Registering...' : 'Register'}
-            </Button>
-            {/* Existing user link to login page */}
+  <TextField fullWidth label="Full Name" name="name" value={formData.name} onChange={handleChange} margin="normal" error={!!errors.name} helperText={errors.name} required disabled={isLoading} InputLabelProps={{ sx: { fontWeight: 'bold', color: '#000' } }} />
+  <TextField fullWidth label="Email" name="email" type="email" value={formData.email} onChange={handleChange} margin="normal" error={!!errors.email} helperText={errors.email} required disabled={isLoading} InputLabelProps={{ sx: { fontWeight: 'bold', color: '#000' } }} />
+  <TextField fullWidth label="Phone Number" name="phone" value={formData.phone} onChange={handleChange} margin="normal" error={!!errors.phone} helperText={errors.phone} required disabled={isLoading} InputLabelProps={{ sx: { fontWeight: 'bold', color: '#000' } }} />
+  <TextField fullWidth label="Password" name="password" type="password" value={formData.password} onChange={handleChange} margin="normal" error={!!errors.password} helperText={errors.password} required disabled={isLoading} InputLabelProps={{ sx: { fontWeight: 'bold', color: '#000' } }} />
+  <TextField fullWidth label="Confirm Password" name="confirmPassword" type="password" value={formData.confirmPassword} onChange={handleChange} margin="normal" error={!!errors.confirmPassword} helperText={errors.confirmPassword} required disabled={isLoading} InputLabelProps={{ sx: { fontWeight: 'bold', color: '#000' } }} />
+
+{successMessage && (
+              <Typography align="center" sx={{ color: 'green', mt: 2 }}>
+                {successMessage}
+              </Typography>
+            )}
+
+            {submitError && (
+              <Typography align="center" sx={{ color: 'red', mt: 2 }}>
+                {submitError}
+              </Typography>
+            )}
+
+<Button 
+  type="submit" 
+  fullWidth 
+  variant="contained" 
+  sx={{ mt: 3, mb: 2, backgroundColor: '#8e24aa' }} 
+  disabled={isLoading}
+>
+  {isLoading ? 'Registering...' : 'Register'}
+</Button>
+
+{/* 🔽 Success Message */}
+{successMessage && (
+  <Typography sx={{ color: 'green', mt: 2, textAlign: 'center' }}>
+    {successMessage}
+  </Typography>
+)}
+
+{/* 🔽 Error Message (if you have it) */}
+{submitError && (
+  <Typography sx={{ color: 'red', mt: 2, textAlign: 'center' }}>
+    {submitError}
+  </Typography>
+)}
+
+
             <Typography align="center" sx={{ mt: 2 }}>
               Have an account?{" "}
-              <Link 
-                component="button"
-                onClick={() => navigate("/login")}
-                sx={{ color: "#8e24aa", textDecoration: "underline" }}
-              >
+              <Link component="button" onClick={() => navigate("/login")} sx={{ color: "#8e24aa", textDecoration: "underline" }}>
                 Login here
               </Link>
             </Typography>

@@ -4,6 +4,11 @@ const config = {
   apiUrl: 'https://pg-sai-backend.onrender.com'
 };
 
+// Configure axios defaults
+axios.defaults.withCredentials = true;
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults.headers.common['Accept'] = 'application/json';
+
 // Add request interceptor
 axios.interceptors.request.use(
   (config) => {
@@ -11,6 +16,8 @@ axios.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    // Ensure credentials are included
+    config.withCredentials = true;
     return config;
   },
   (error) => {
