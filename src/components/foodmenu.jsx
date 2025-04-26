@@ -32,7 +32,7 @@ const FoodMenu = () => {
       sx={{
         width: "100vw",
         minHeight: "100vh", // Full viewport height
-        backgroundImage: 'url("https://img.freepik.com/free-photo/ingredients-near-pizza_23-2147772081.jpg?ga=GA1.1.1199500948.1737623741&semt=ais_hybrid")',
+        backgroundImage: 'url("https://img.freepik.com/free-photo/top-view-food-frame-with-copy-space_23-2148723447.jpg?ga=GA1.1.1199500948.1737623741&w=740")',
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

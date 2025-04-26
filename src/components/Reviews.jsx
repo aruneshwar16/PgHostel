@@ -26,7 +26,7 @@ const Reviews = () => {
       setIsConnecting(true);
       const isConnected = await testConnection();
       if (!isConnected) {
-        setConnectionError('Unable to connect to the server. Please check your internet ⛔ connection and try again.');
+        setConnectionError('Connecting Please Wait!📨');
         return;
       }
 
@@ -50,7 +50,7 @@ const Reviews = () => {
       const response = await axios.get(apiUrl, {
         headers,
         withCredentials: true,
-        timeout: 10000 // 10 second timeout
+        timeout: 2000 // 10 second timeout
       });
       
       console.log('Reviews API Response:', response.data);

@@ -252,7 +252,7 @@ const Home = () => {
     mb: 5,
     backgroundImage: `
       linear-gradient(rgba(90, 87, 87, 0.17), rgba(148, 143, 143, 0.18)),
-      url('https://img.freepik.com/free-vector/hand-drawn-iranian-women-illustration_23-2149825013.jpg?ga=GA1.1.1199500948.17')
+      url('https://img.freepik.com/free-vector/young-afro-woman-with-frame-ribbon-leafs_25030-39730.jpg?ga=GA1.1.1199500948.1737623741&semt=ais_hybrid&w=740')
     `,
     backgroundSize: "cover", 
     backgroundPosition: "center", 

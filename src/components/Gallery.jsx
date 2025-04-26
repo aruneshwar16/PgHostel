@@ -36,7 +36,7 @@ const Gallery = () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          timeout: 10000 // 10 second timeout
+          timeout: 5000 // 10 second timeout
         });
         
         console.log('Gallery API Response:', response.data);
@@ -342,10 +342,10 @@ const Gallery = () => {
                     disabled={isLoading}
                   >
                     <MenuItem value="Rooms">Rooms</MenuItem>
-                    <MenuItem value="Facilities">Facilities</MenuItem>
-                    <MenuItem value="Events">Events</MenuItem>
                     <MenuItem value="Food">Food</MenuItem>
-
+                    <MenuItem value="Amenities">Amenities</MenuItem>
+                    <MenuItem value="Exterior">Exterior</MenuItem>
+                    
                   </TextField>
                   <Button
                     type="submit"
@@ -367,7 +367,7 @@ const Gallery = () => {
         <Grid container spacing={4} sx={{ mt: 4 }}>
           {currentImages.length === 0 ? (
             <Typography variant="h6" align="center" sx={{ width: '100%' }}>
-              No images found⛔.
+              Loading... Please Wait!🚀
             </Typography>
           ) : (
             currentImages.map((img, index) => (
