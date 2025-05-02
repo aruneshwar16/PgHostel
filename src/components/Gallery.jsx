@@ -72,6 +72,11 @@ const Gallery = () => {
   }, []);
 
   useEffect(() => {
+    const isAdmin = localStorage.getItem('isAdmin') === 'true';
+    setIsAdminLoggedIn(isAdmin);
+  }, []);
+
+  useEffect(() => {
     if (loginSuccess) {
       const timer = setTimeout(() => setLoginSuccess(false), 3000);
       return () => clearTimeout(timer);
@@ -172,6 +177,9 @@ const Gallery = () => {
 
   // Calculate if there are more images to show
   const hasMoreImages = images.length > indexOfLastImage;
+
+  // Update the welcome message based on the isAdmin flag
+  const welcomeMessage = isAdminLoggedIn ? 'Welcome, Admin!' : 'Welcome to the Gallery!';
 
   return (
     <Box
@@ -309,7 +317,7 @@ const Gallery = () => {
 
               <Grid item xs={12}>
                 <Typography variant="h5" align="center" sx={{ mt: 3 }}>
-                  Welcome, Admin!
+                  {welcomeMessage}
                 </Typography>
               </Grid>
 

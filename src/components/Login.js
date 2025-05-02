@@ -33,20 +33,28 @@ const Login = () => {
     setError("");
     setShowError(false);
     setIsLoading(true);
-
+  
     try {
       console.log("Login attempted:", formData);
       const response = await axios.post("https://pg-sai-backend.onrender.com/api/auth/login", formData);
-      
+  
       // Store the token and user info
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("userId", response.data.userId);
       localStorage.setItem("username", response.data.username);
-      // Show success message and redirect after 3 seconds
+      localStorage.setItem("isAdmin", response.data.isAdmin); // Store isAdmin flag
+  
+      // Show success message
       setSuccess(true);
+  
+      // Redirect based on user role
       timerRef.current = setTimeout(() => {
         setSuccess(false);
-        navigate("/reviews");
+        if (response.data.isAdmin) {
+          navigate("/admin-dashboard"); // Redirect admin to admin dashboard
+        } else {
+          navigate("/reviews"); // Redirect regular user to reviews page
+        }
       }, 3000);
     } catch (error) {
       console.error("Login error:", error);

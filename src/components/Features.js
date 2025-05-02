@@ -32,7 +32,7 @@ const Features = () => {
       title: 'Safe-Secure',
       description: 'Safe Place for Women with All ladies Working Staffs ',
       icon: <SecurityIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
-      image: 'https://e1.pxfuel.com/desktop-wallpaper/27/116/desktop-wallpaper-women-safety.jpg'
+      image: 'https://img.freepik.com/free-vector/realtor-assistance-illustration_52683-46786.jpg?ga=GA1.1.1199500948.1737623741&w=740'
     },
     // {
     //   title: 'Safe-Secure',
