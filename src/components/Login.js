@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Container, Paper, TextField, Button, Typography, Box,Link } from "@mui/material";
+import React, { useState, useRef, useEffect } from "react";
+import { Container, Paper, TextField, Button, Typography, Box, Link, Alert } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +8,15 @@ const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const timerRef = useRef();
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,11 +25,13 @@ const Login = () => {
       [name]: value,
     }));
     setError(""); // Clear error when user types
+    setShowError(false);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setShowError(false);
     setIsLoading(true);
 
     try {
@@ -31,9 +42,12 @@ const Login = () => {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("userId", response.data.userId);
       localStorage.setItem("username", response.data.username);
-      
-      // Redirect to reviews page
-      navigate("/reviews");
+      // Show success message and redirect after 3 seconds
+      setSuccess(true);
+      timerRef.current = setTimeout(() => {
+        setSuccess(false);
+        navigate("/reviews");
+      }, 3000);
     } catch (error) {
       console.error("Login error:", error);
       if (error.response) {
@@ -43,6 +57,11 @@ const Login = () => {
       } else {
         setError("An error occurred. Please try again.");
       }
+      setShowError(true);
+      timerRef.current = setTimeout(() => {
+        setShowError(false);
+        setError("");
+      }, 3000);
     } finally {
       setIsLoading(false);
     }
@@ -84,7 +103,19 @@ const Login = () => {
         Login
       </Typography>
 
-</Box>
+      {/* Success Message */}
+      {success && (
+        <Alert severity="success" sx={{ mb: 2, fontWeight: 600 }}>
+          Login successful! Redirecting...
+        </Alert>
+      )}
+      {/* Error Message */}
+      {showError && error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+        </Alert>
+      )}
+    </Box>
 
           <Box component="form" onSubmit={handleSubmit}>
             <TextField

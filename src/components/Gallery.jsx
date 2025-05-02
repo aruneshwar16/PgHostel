@@ -27,7 +27,7 @@ const Gallery = () => {
         // Test connection first
         const isConnected = await testConnection();
         if (!isConnected) {
-          setConnectionError('Unable to connect to the server. Please check your internet connection and try again.');
+          setConnectionError('connecting Please Wait or try again.');
           return;
         }
 
@@ -36,7 +36,7 @@ const Gallery = () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          timeout: 5000 // 10 second timeout
+          timeout: 2000 // 2 second timeout
         });
         
         console.log('Gallery API Response:', response.data);

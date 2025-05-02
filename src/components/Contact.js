@@ -4,7 +4,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 
-const founderImage = "/pg.6.png"; // Ensure this image is inside 'public'
+const founderImage = "/sai pg founder1.jpg"; // Ensure this image is inside 'public'
 
 const Contact = () => {
   return (

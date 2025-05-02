@@ -167,11 +167,11 @@ const Register = () => {
 </Button>
 
 {/* 🔽 Success Message */}
-{successMessage && (
+{/* {successMessage && (
   <Typography sx={{ color: 'green', mt: 2, textAlign: 'center' }}>
     {successMessage}
   </Typography>
-)}
+)} */}
 
 {/* 🔽 Error Message (if you have it) */}
 {submitError && (

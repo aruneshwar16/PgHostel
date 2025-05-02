@@ -6,6 +6,8 @@ import LocalDiningIcon from '@mui/icons-material/LocalDining';
 import LocalLaundryServiceIcon from '@mui/icons-material/LocalLaundryService';
 import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
 import LunchDining from '@mui/icons-material/LunchDining';
+import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
+
 import { useNavigate } from 'react-router-dom';
 
 const Features = () => {
@@ -30,8 +32,15 @@ const Features = () => {
       title: 'Safe-Secure',
       description: 'Safe Place for Women with All ladies Working Staffs ',
       icon: <SecurityIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
-      image: 'https://e1.pxfuel.com/desktop-wallpaper/27/116/desktop-wallpaper-women-safety.jpg '
+      image: 'https://e1.pxfuel.com/desktop-wallpaper/27/116/desktop-wallpaper-women-safety.jpg'
     },
+    // {
+    //   title: 'Safe-Secure',
+    //   description: 'Safe Place for Women with All ladies Working Staffs ',
+    //   icon: <SecurityIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
+    //   image: 'https://img.freepik.com/free-vector/flat-background-safer-internet-day_23-2151127506.jpg?ga=GA1.1.1199500948.1737623741&w=740'
+    // },
+    
     {
       title: 'Stronger Women, Stronger Society',
       description: 'Every womans success strengthens us all,Lets uplift and support working women!',
@@ -65,7 +74,14 @@ const Features = () => {
       description: 'Daily packed meals are available',
       icon: <LunchDining sx={{ fontSize: 40, color: '#8e24aa' }} />,
       image: 'https://t4.ftcdn.net/jpg/08/06/21/93/360_F_806219362_LiOsUcCtWAA9nlb4PyiA83bHFSHG1wGJ.jpg '
+    },
+    {
+      title: 'SheCares Health Connect',
+      description: 'Secure virtual platform connecting women to expert lady doctors during urgent health needs.',
+      icon: <MedicalServicesIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
+      image: 'https://img.freepik.com/free-vector/online-doctor-concept-illustration_114360-1783.jpg?ga=GA1.1.1199500948.1737623741&w=740'
     }
+    
   ];
 
   return (
