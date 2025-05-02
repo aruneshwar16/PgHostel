@@ -34,12 +34,12 @@ const Features = () => {
       icon: <SecurityIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
       image: 'https://img.freepik.com/free-vector/realtor-assistance-illustration_52683-46786.jpg?ga=GA1.1.1199500948.1737623741&w=740'
     },
-    // {
-    //   title: 'Safe-Secure',
-    //   description: 'Safe Place for Women with All ladies Working Staffs ',
-    //   icon: <SecurityIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
-    //   image: 'https://img.freepik.com/free-vector/flat-background-safer-internet-day_23-2151127506.jpg?ga=GA1.1.1199500948.1737623741&w=740'
-    // },
+     {
+     title: 'Safe-Secure',
+     description: 'Safe Place for Women with All ladies Working Staffs ',
+      icon: <SecurityIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
+      image: 'https://img.freepik.com/free-vector/flat-background-safer-internet-day_23-2151127506.jpg?ga=GA1.1.1199500948.1737623741&w=740'
+    },
     
     {
       title: 'Stronger Women, Stronger Society',
