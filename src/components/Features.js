@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Container, Grid, Typography, Card, CardContent, Box, CardMedia, Button } from '@mui/material';
 import WifiIcon from '@mui/icons-material/Wifi';
 import SecurityIcon from '@mui/icons-material/Security';
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+
 import LocalDiningIcon from '@mui/icons-material/LocalDining';
 import LocalLaundryServiceIcon from '@mui/icons-material/LocalLaundryService';
 import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
@@ -34,12 +36,12 @@ const Features = () => {
       icon: <SecurityIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
       image: 'https://img.freepik.com/free-vector/realtor-assistance-illustration_52683-46786.jpg?ga=GA1.1.1199500948.1737623741&w=740'
     },
-    // {
-    //   title: 'Safe-Secure',
-    //   description: 'Safe Place for Women with All ladies Working Staffs ',
-    //   icon: <SecurityIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
-    //   image: 'https://img.freepik.com/free-vector/flat-background-safer-internet-day_23-2151127506.jpg?ga=GA1.1.1199500948.1737623741&w=740'
-    // },
+    {
+      title: 'Protected & Peaceful Living',
+      description: '24/7 surveillance and women-only staff ensure peace of mind and complete safety.',
+      icon: <VerifiedUserIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
+      image: 'https://img.freepik.com/free-vector/flat-background-safer-internet-day_23-2151127506.jpg?ga=GA1.1.1199500948.1737623741&w=740'
+    },
     
     {
       title: 'Stronger Women, Stronger Society',
@@ -183,7 +185,7 @@ const Features = () => {
               <CardContent>
                 <Typography variant="h5" gutterBottom>Four-Sharing Room</Typography>
                 <Typography variant="body1" color="text.secondary">
-                  Spacious room with three single beds, perfect for a group of friends wanting to stay together.
+                  Spacious room with four single beds, perfect for a group of friends wanting to stay together.
                 </Typography>
               </CardContent>
             </Card>

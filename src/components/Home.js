@@ -7,6 +7,8 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useWeb3Forms from "@web3forms/react";
+import { PhoneIcon, MailIcon } from 'lucide-react';
+import { useLocation } from "react-router-dom";
 
 // // Image Slider
 const ImageSlider = styled(Box)({
@@ -283,6 +285,115 @@ const Home = () => {
   </form>
 </Container> 
 
+<Box
+  sx={{
+    mt: 5,
+    pt: 5,
+    pb: 5,
+    backgroundImage:
+      "linear-gradient(135deg,rgb(252, 51, 171) 0%,rgb(251, 131, 231) 50%,rgb(172, 6, 232) 100%)",
+    color: "black",
+    width: "100%",
+  }}
+>
+  <Container maxWidth="lg">
+    <Grid container spacing={4} sx={{ px: 4, py: 5 }}>
+ 
+      
+      {/* Logo and Tagline */}
+      <Grid item xs={12} sm={4}>
+        <Typography variant="h3" sx={{ fontWeight: "bold", mb: 1 }}>
+          Sai PG Women's Hostel
+        </Typography>
+        <Typography variant="body2">
+          A safe, comfortable, and affordable place for women in Tiruvannamalai.
+        </Typography>
+      </Grid>
+      
+      {/* Contact Information */}
+      <Grid item xs={12} sm={4}>
+        <Typography variant="h4" sx={{ fontWeight: "bold", mb: 1 }}>
+          Contact Us
+        </Typography>
+        <Typography variant="body2">
+          <PhoneIcon mx={{ fontSize: "2rem", mr: 1 }} /> +91 9123536809
+        </Typography>
+        <Typography variant="body2">
+          <MailIcon mx={{ fontSize: "2rem", mr: 1 }} /> saipghostel@gmail.com
+        </Typography>
+        <Typography variant="body2">
+          <LocationOnIcon mx={{ fontSize: "1rem", mr: 1 }} /> Tiruvannamalai, Tamil Nadu
+        </Typography>
+      </Grid>
+      
+      {/* Social Media and Quick Links */}
+      <Grid item xs={12} sm={4}>
+        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 1 }}>
+          Follow Us
+        </Typography>
+        <Box display="flex" gap={3}>
+          <IconButton sx={{ backgroundColor: "#25D366", color: "white" }} onClick={() => window.open("https://wa.me/919123536809", "_blank")}>
+            <WhatsAppIcon />
+          </IconButton>
+          <IconButton sx={{ backgroundColor: "#E4405F", color: "white" }} onClick={() => window.open("https://www.instagram.com/sai.ladies.pg_hostel", "_blank")}>
+            <InstagramIcon />
+          </IconButton>
+          <IconButton sx={{ backgroundColor: "#4285F4", color: "white" }} onClick={() => window.open("https://maps.app.goo.gl/pN9BBAMtkJCbJDWL7", "_blank")}>
+            <LocationOnIcon />
+          </IconButton>
+        </Box>
+      </Grid>
+      
+     {/* Empowering Women Images */}
+<Grid item xs={12}>
+  <Typography variant="h4" sx={{ fontWeight: "bold", mb: 1, mt: 4 }}>
+    Empowering Women at Sai PG Women's Hostel
+  </Typography>
+  <Grid container spacing={2} sx={{ mt: 2 }}>
+    <Grid item xs={12} sm={4}>
+      <Box component="img"
+        src="https://img.freepik.com/free-photo/international-women-s-day-celebration-equal-right-digital-art-style_23-2151368528.jpg?ga=GA1.1.1199500948.1737623741&w=740"
+        alt="Women Empowerment"
+        sx={{ width: '100%', height: 'auto', borderRadius: 2 }}
+      />
+    </Grid>
+    <Grid item xs={12} sm={4}>
+      <Box component="img"
+        src="https://img.freepik.com/free-photo/international-women-s-day-celebration-equal-right-digital-art-style_23-2151368417.jpg?ga=GA1.1.1199500948.1737623741&w=740"
+        alt="Professional Women"
+        sx={{ width: '100%', height: 'auto', borderRadius: 2 }}
+      />
+    </Grid>
+    <Grid item xs={12} sm={4}>
+      <Box component="img"
+        src="https://img.freepik.com/free-photo/international-women-s-day-celebration-equal-right-digital-art-style_23-2151368531.jpg?ga=GA1.1.1199500948.1737623741&semt=ais_hybrid&w=740"
+        alt="Women in Tech"
+        sx={{ width: '100%', height: 'auto', borderRadius: 2 }}
+      />
+    </Grid>
+  </Grid>
+</Grid>
+
+{/* Quotes and Copyright */}
+<Grid item xs={12} sx={{ mt: 2, textAlign: 'center' }}>
+  <Typography variant="body2" sx={{ mb: 1, fontStyle: "italic" }}>
+    “A woman’s life begins at any age, not just at 16 or 26.”
+  </Typography>
+  <Typography variant="body2" sx={{ mb: 1, fontStyle: "italic" }}>
+    “Don’t be afraid to dream, no matter what your age is.”
+  </Typography>
+  <Typography variant="body2" sx={{ mb: 2, fontStyle: "italic" }}>
+    “You are never too old to find your purpose.”
+  </Typography>
+
+  <Typography variant="caption" sx={{ display: "block", mt: 2 }}>
+    © {new Date().getFullYear()} Sai PG Women's Hostel. All rights reserved.
+  </Typography>
+</Grid>
+
+    </Grid>
+  </Container>
+</Box>
     </Box>
   );
 };

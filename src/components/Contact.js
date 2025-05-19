@@ -40,17 +40,14 @@ const Contact = () => {
 
           {/* Hostel Details */}
           <Typography variant="body1" sx={{ mt: 3 }}>
-            We started our hostel in 2023 and have been successfully running it for over two years.
-            Sai PG Women's Hostel provides safe, comfortable, and affordable accommodation for women.
-            Located in a prime area of Tiruvannamalai, our hostel is equipped with modern amenities, ensuring security, convenience, 
-            and a homely atmosphere for students and working women.
-            <strong> Our hostel's slogan: "நீ மங்கையாய் பிறந்திடவே ஒரு மாதவம் செய்தாயோ!"</strong>
+          We started Sai PG Women's Hostel in 2023 with a vision to provide women with a safe, comfortable, and affordable place to stay in Tiruvannamalai. For over two years, we have proudly served students and working women, offering not just accommodation—but a nurturing and secure environment that feels like home.
+As a mother of two teenage daughters, I understand the emotional and physical challenges young women face while staying away from home. Having personally experienced the concerns of safety, hygiene, and nutrition, I’ve made it my mission to create a space where residents are truly cared for.
+Being a certified dietitian and nutritionist, I also recognize the importance of balanced meals. At Sai PG, we serve nutritious, home-style food that is thoughtfully prepared to meet the daily dietary needs of young women. Our meal plans are designed to keep our residents healthy and energized—something I believe every girl deserves, especially when away from her family.
+            <strong>
+            Our goal is to provide a peaceful and supportive environment where every resident can focus on her goals, feel safe, and thrive with confidence.
+             Our hostel's slogan: "நீ மங்கையாய் பிறந்திடவே ஒரு மாதவம் செய்தாயோ!"</strong>
           </Typography>
 
-          <Typography variant="body1" sx={{ mt: 2 }}>
-            Our hostel offers <strong>Homely rooms</strong>, <strong>Security</strong>, 
-            <strong> Packed Food</strong>, <strong>Nutritious meals</strong>, and <strong>Easy access to public transportation</strong>.
-          </Typography>
         </Paper>
 
         {/* Contact Details & Location */}
