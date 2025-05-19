@@ -24,67 +24,66 @@ const Features = () => {
   };
 
   const features = [
-    {
-      title: 'High-Speed Network',
-      description: 'High-speed Network of 4G and 5G for work and entertainment',
-      icon: <WifiIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
-      image: 'https://telecomtalk.info/wp-content/uploads/2022/12/know-the-differences-between-4g-and-5g-1200x900.jpg '
-    },
-    {
-      title: 'Safe-Secure',
-      description: 'Safe Place for Women with All ladies Working Staffs ',
-      icon: <SecurityIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
-      image: 'https://img.freepik.com/free-vector/realtor-assistance-illustration_52683-46786.jpg?ga=GA1.1.1199500948.1737623741&w=740'
-    },
-    {
-      title: 'Protected & Peaceful Living',
-      description: '24/7 surveillance and women-only staff ensure peace of mind and complete safety.',
-      icon: <VerifiedUserIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
-      image: 'https://img.freepik.com/free-vector/flat-background-safer-internet-day_23-2151127506.jpg?ga=GA1.1.1199500948.1737623741&w=740'
-    },
-    
-    {
-      title: 'Stronger Women, Stronger Society',
-      description: 'Every womans success strengthens us all,Lets uplift and support working women!',
-      icon: <SecurityIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
-      image: 'https://m.media-amazon.com/images/S/pv-target-images/e25ada89898c20fe2448bd1952de096f175cb4ab99927826efb0490f45592971.jpg'
-    },
-    {
-      title: 'Home-Made Foods',
-      description: 'Nutritious and delicious meals served three times a day',
-      icon: <LocalDiningIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
-      image: 'https://i.pinimg.com/564x/f3/cb/96/f3cb9614e35b516f510c65db2304aeda.jpg ',
-      button: {
-        text: 'View Our Foods',
-        action: handleNavigate
-      }
-    },
-    {
-      title: 'Laundry Service',
-      description: 'Laundry and ironing services available',
-      icon: <LocalLaundryServiceIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
-      image: 'https://static.vecteezy.com/system/resources/thumbnails/050/897/891/small_2x/basket-with-clean-folded-laundry-near-a-washing-machine-in-a-laundry-room-photo.jpeg '
-    },
-    {
-      title: 'Housekeeping',
-      description: 'Regular cleaning and maintenance of rooms and common areas',
-      icon: <CleaningServicesIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
-      image: 'https://img.freepik.com/free-photo/hands-holding-cleaning-tools-solutions_53876-148192.jpg '
-    },
-    {
-      title: 'Packed Lunch Available',
-      description: 'Daily packed meals are available',
-      icon: <LunchDining sx={{ fontSize: 40, color: '#8e24aa' }} />,
-      image: 'https://t4.ftcdn.net/jpg/08/06/21/93/360_F_806219362_LiOsUcCtWAA9nlb4PyiA83bHFSHG1wGJ.jpg '
-    },
-    {
-      title: 'SheCares Health Connect',
-      description: 'Secure virtual platform connecting women to expert lady doctors during urgent health needs.',
-      icon: <MedicalServicesIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
-      image: 'https://img.freepik.com/free-vector/online-doctor-concept-illustration_114360-1783.jpg?ga=GA1.1.1199500948.1737623741&w=740'
+  {
+    title: 'High-Speed Network',
+    description: 'High-speed Network of 4G and 5G for work and entertainment',
+    icon: <WifiIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
+    image: 'https://telecomtalk.info/wp-content/uploads/2022/12/know-the-differences-between-4g-and-5g-1200x900.jpg '
+  },
+  {
+    title: 'Safe-Secure',
+    description: 'Safe Place for Women with All ladies Working Staffs ',
+    icon: <SecurityIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
+    image: 'https://img.freepik.com/free-vector/realtor-assistance-illustration_52683-46786.jpg?ga=GA1.1.1199500948.1737623741&w=740'
+  },
+  {
+    title: 'Protected & Peaceful Living',
+    description: '24/7 surveillance and women-only staff ensure peace of mind and complete safety.',
+    icon: <VerifiedUserIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
+    image: 'https://img.freepik.com/free-vector/flat-background-safer-internet-day_23-2151127506.jpg?ga=GA1.1.1199500948.1737623741&w=740'
+  },
+  {
+    title: 'Stronger Women, Stronger Society',
+    description: 'Every womans success strengthens us all,Lets uplift and support working women!',
+    icon: <SecurityIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
+    image: 'https://m.media-amazon.com/images/S/pv-target-images/e25ada89898c20fe2448bd1952de096f175cb4ab99927826efb0490f45592971.jpg'
+  },
+  {
+    title: 'Home-Made Foods',
+    description: 'Nutritious and delicious meals served three times a day',
+    icon: <LocalDiningIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
+    image: 'https://i.pinimg.com/564x/f3/cb/96/f3cb9614e35b516f510c65db2304aeda.jpg ',
+    button: {
+      text: 'View Our Foods',
+      action: handleNavigate
     }
-    
-  ];
+  },
+  {
+    title: 'Laundry Service',
+    description: 'Laundry and ironing services available',
+    icon: <LocalLaundryServiceIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
+    image: 'https://static.vecteezy.com/system/resources/thumbnails/050/897/891/small_2x/basket-with-clean-folded-laundry-near-a-washing-machine-in-a-laundry-room-photo.jpeg '
+  },
+  {
+    title: 'Housekeeping',
+    description: 'Regular cleaning and maintenance of rooms and common areas',
+    icon: <CleaningServicesIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
+    image: 'https://img.freepik.com/free-photo/hands-holding-cleaning-tools-solutions_53876-148192.jpg '
+  },
+  {
+    title: 'Packed Lunch Available',
+    description: 'Daily packed meals are available',
+    icon: <LunchDining sx={{ fontSize: 40, color: '#8e24aa' }} />,
+    image: 'https://t4.ftcdn.net/jpg/08/06/21/93/360_F_806219362_LiOsUcCtWAA9nlb4PyiA83bHFSHG1wGJ.jpg '
+  },
+  {
+    title: 'SheCares Health Connect',
+    description: 'Secure virtual platform connecting women to expert lady doctors during urgent health needs.',
+    icon: <MedicalServicesIcon sx={{ fontSize: 40, color: '#8e24aa' }} />,
+    image: 'https://img.freepik.com/free-vector/online-doctor-concept-illustration_114360-1783.jpg?ga=GA1.1.1199500948.1737623741&w=740'
+  }
+];
+
 
   return (
     <Container maxWidth="lg" sx={{ py: 8 }}>
