@@ -34,14 +34,14 @@ const Contact = () => {
             <Avatar src={founderImage} alt="Founder" sx={{ width: 200, height: 200, borderRadius: 0, mb: 2 }} />
             <Typography variant="h5">Mrs. Menaka Elankamban</Typography>
             <Typography variant="body1" color="textSecondary">
-              Founder & Managing Director.
+              Pioneer and CEO
             </Typography>
           </Box>
 
           {/* Hostel Details */}
           <Typography variant="body1" sx={{ mt: 3 }}>
           We started Sai PG Women's Hostel in 2023 with a vision to provide women with a safe, comfortable, and affordable place to stay in Tiruvannamalai. For over two years, we have proudly served students and working women, offering not just accommodation—but a nurturing and secure environment that feels like home.
-As a mother of two teenage daughters, I understand the emotional and physical challenges young women face while staying away from home. Having personally experienced the concerns of safety, hygiene, and nutrition, I’ve made it my mission to create a space where residents are truly cared for.
+As a mother of two Young Adults, I understand the emotional and physical challenges young women face while staying away from home. Having personally experienced the concerns of safety, hygiene, and nutrition, I’ve made it my mission to create a space where residents are truly cared for.
 Being a certified dietitian and nutritionist, I also recognize the importance of balanced meals. At Sai PG, we serve nutritious, home-style food that is thoughtfully prepared to meet the daily dietary needs of young women. Our meal plans are designed to keep our residents healthy and energized—something I believe every girl deserves, especially when away from her family.
             <strong>
             Our goal is to provide a peaceful and supportive environment where every resident can focus on her goals, feel safe, and thrive with confidence.
